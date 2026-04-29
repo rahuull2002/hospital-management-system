@@ -1,789 +1,694 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>Advanced eye care hospital</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>Advanced eye care hospital</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: system-ui, 'Segoe UI', 'Inter', -apple-system, 'Roboto', sans-serif;
+    }
 
-        body {
-            background: #eef2f7;
-            padding: 2rem 1.5rem;
-            color: #1a2c3e;
-        }
+    body {
+      background: linear-gradient(145deg, #ecf3f8 0%, #dfe8f0 100%);
+      min-height: 100vh;
+      padding: 2rem 1.5rem;
+    }
 
-        .app-container {
-            max-width: 1400px;
-            margin: 0 auto;
-            background: white;
-            border-radius: 32px;
-            box-shadow: 0 20px 35px -12px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
-            padding: 1.8rem 2rem 2.5rem 2rem;
-        }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
 
-        .header-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: baseline;
-            flex-wrap: wrap;
-            margin-bottom: 1.8rem;
-            border-bottom: 2px solid #e9edf2;
-            padding-bottom: 1rem;
-        }
-        .header-row h1 {
-            font-size: 1.9rem;
-            font-weight: 700;
-            background: linear-gradient(135deg, #1F5E8E, #2C8FBB);
-            background-clip: text;
-            -webkit-background-clip: text;
-            color: transparent;
-        }
-        .create-appointment-btn {
-            background: #1F5E8E;
-            border: none;
-            color: white;
-            font-weight: 600;
-            padding: 0.6rem 1.4rem;
-            border-radius: 60px;
-            cursor: pointer;
-            transition: 0.2s;
-        }
-        .create-appointment-btn:hover {
-            background: #0e4a72;
-            transform: scale(0.97);
-        }
+    .main-header {
+      margin-bottom: 2rem;
+      text-align: center;
+    }
 
-        .form-card {
-            background: #f9fbfd;
-            border-radius: 28px;
-            padding: 1.5rem 1.8rem;
-            margin-bottom: 2rem;
-            border: 1px solid #e2e9f0;
-        }
-        .section-title {
-            font-size: 1.2rem;
-            font-weight: 600;
-            margin-bottom: 1.2rem;
-            color: #1e4663;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
+    .main-header h1 {
+      font-size: 2.2rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, #1C3F5C, #2A5F7A);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+    }
 
-        .appointment-type-group {
-            display: flex;
-            gap: 2rem;
-            margin-bottom: 1rem;
-            background: #ffffff;
-            padding: 0.6rem 1.2rem;
-            border-radius: 48px;
-            width: fit-content;
-            border: 1px solid #dde3ea;
-        }
-        .appointment-type-group label {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-weight: 500;
-            cursor: pointer;
-        }
-        .type-radio {
-            accent-color: #1F5E8E;
-        }
+    .main-header p {
+      color: #2c3e44;
+      margin-top: 0.3rem;
+    }
 
-        .existing-patient-selector {
-            background: #f0f4fa;
-            padding: 0.8rem 1rem;
-            border-radius: 20px;
-            margin-bottom: 1.5rem;
-            display: none;
-            align-items: center;
-            gap: 1rem;
-            flex-wrap: wrap;
-        }
-        .existing-patient-selector label {
-            font-weight: 600;
-            color: #1f4662;
-        }
-        #existingPatientSelect {
-            padding: 0.5rem 1rem;
-            border-radius: 40px;
-            border: 1px solid #cbdbe0;
-            min-width: 220px;
-            background: white;
-        }
-        .load-patient-btn {
-            background: #2C8FBB;
-            color: white;
-            border: none;
-            padding: 0.45rem 1.2rem;
-            border-radius: 40px;
-            cursor: pointer;
-        }
+    /* Single column layout: form above, history below */
+    .form-section, .history-section {
+      margin-bottom: 2rem;
+    }
 
-        .form-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 1.2rem;
-            margin-bottom: 1.5rem;
-        }
-        .form-field {
-            display: flex;
-            flex-direction: column;
-            gap: 0.4rem;
-        }
-        .form-field label {
-            font-weight: 600;
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            color: #4a627a;
-        }
-        .form-field input, .form-field select {
-            padding: 0.7rem 0.9rem;
-            border: 1px solid #cfdde9;
-            border-radius: 18px;
-            font-size: 0.9rem;
-        }
-        .form-field input:focus, .form-field select:focus {
-            outline: none;
-            border-color: #2C8FBB;
-        }
+    .card {
+      background: rgba(255, 255, 255, 0.96);
+      backdrop-filter: blur(2px);
+      border-radius: 2rem;
+      box-shadow: 0 20px 35px -12px rgba(0, 0, 0, 0.12);
+      padding: 1.6rem 2rem;
+      transition: all 0.2s;
+      border: 1px solid rgba(255,255,255,0.7);
+    }
 
-        .date-strip {
-            margin: 1.5rem 0 1.2rem 0;
-        }
-        .date-chips {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.7rem;
-            margin-bottom: 0.8rem;
-        }
-        .date-chip {
-            background: #f0f4f9;
-            padding: 0.45rem 1rem;
-            border-radius: 40px;
-            font-size: 0.85rem;
-            font-weight: 500;
-            cursor: pointer;
-            border: 1px solid transparent;
-        }
-        .date-chip.active-chip {
-            background: #1F5E8E;
-            color: white;
-        }
-        .appointment-date-picker {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            flex-wrap: wrap;
-        }
-        .btn-create {
-            background: #1F5E8E;
-            color: white;
-            border: none;
-            padding: 0.8rem 1.8rem;
-            border-radius: 40px;
-            font-weight: 700;
-            cursor: pointer;
-            width: 100%;
-            max-width: 260px;
-        }
+    .card h2 {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: #1f4e6e;
+      border-left: 5px solid #2A9D8F;
+      padding-left: 1rem;
+      margin-bottom: 1.4rem;
+    }
 
-        .filter-panel {
-            background: #ffffff;
-            border-radius: 24px;
-            padding: 1.2rem 1.5rem;
-            margin: 1.8rem 0;
-            border: 1px solid #e4ecf3;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 1.8rem;
-            align-items: flex-end;
-            justify-content: space-between;
-        }
-        .filter-item {
-            display: flex;
-            flex-direction: column;
-            gap: 0.4rem;
-        }
-        .filter-item input {
-            padding: 0.6rem 1rem;
-            border-radius: 28px;
-            border: 1px solid #cbd5e1;
-            min-width: 150px;
-        }
-        .search-group {
-            display: flex;
-            gap: 0.6rem;
-            align-items: flex-end;
-        }
-        .filter-btn, .search-btn, .print-list-btn {
-            background: #eef2f9;
-            border: none;
-            padding: 0.6rem 1.3rem;
-            border-radius: 40px;
-            font-weight: 600;
-            cursor: pointer;
-        }
-        .search-btn {
-            background: #2C8FBB;
-            color: white;
-        }
-        .print-list-btn {
-            background: #34a56f;
-            color: white;
-        }
+    .form-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
 
-        .table-header-actions {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            margin-bottom: 1rem;
-        }
-        .table-wrapper {
-            overflow-x: auto;
-            border-radius: 24px;
-            border: 1px solid #e9edf2;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 0.85rem;
-        }
-        th {
-            text-align: left;
-            padding: 1rem 0.9rem;
-            background: #f8fafd;
-            border-bottom: 1px solid #e2e8f0;
-        }
-        td {
-            padding: 0.9rem;
-            border-bottom: 1px solid #ecf3f9;
-        }
-        .action-buttons {
-            display: flex;
-            gap: 0.4rem;
-        }
-        .edit-btn, .delete-btn, .print-row-btn {
-            background: none;
-            border: none;
-            font-size: 1.1rem;
-            cursor: pointer;
-            padding: 0.2rem 0.5rem;
-            border-radius: 30px;
-        }
-        .edit-btn:hover { background: #eef2ff; }
-        .delete-btn:hover { background: #ffe6e6; color: #c0392b; }
-        .print-row-btn:hover { background: #e0f2e9; color: #1e6f4c; }
-        .empty-row td {
-            text-align: center;
-            padding: 2rem;
-            color: #7f8c8d;
-        }
-        .toast-msg {
-            position: fixed;
-            bottom: 25px;
-            right: 25px;
-            background: #1e3b4b;
-            color: white;
-            padding: 0.8rem 1.5rem;
-            border-radius: 60px;
-            z-index: 1000;
-        }
+    .form-group {
+      flex: 1 1 180px;
+      min-width: 140px;
+    }
 
-        @media print {
-            body * {
-                visibility: hidden;
-            }
-            .app-container, .app-container * {
-                visibility: visible;
-            }
-            .app-container {
-                position: absolute;
-                top: 0;
-                left: 0;
-                width: 100%;
-                margin: 0;
-                padding: 1rem;
-            }
-            .form-card, .filter-panel, .create-appointment-btn, .print-list-btn,
-            .btn-create, .action-buttons, .toast-msg, .existing-patient-selector,
-            .appointment-type-group, .date-chips, .appointment-date-picker {
-                display: none !important;
-            }
-            .table-wrapper {
-                border: none;
-            }
-            th, td {
-                border: 1px solid #ccc;
-            }
-        }
+    label {
+      font-weight: 600;
+      display: block;
+      margin-bottom: 0.3rem;
+      color: #1e3a4d;
+      font-size: 0.8rem;
+      letter-spacing: 0.3px;
+    }
 
-        .single-print-container {
-            display: none;
-        }
-        @media print {
-            .single-print-container {
-                display: block;
-                font-family: monospace;
-            }
-            body > *:not(.single-print-container) {
-                display: none;
-            }
-        }
-    </style>
+    input, select, textarea {
+      width: 100%;
+      padding: 0.7rem 0.9rem;
+      border-radius: 1rem;
+      border: 1.5px solid #cbd5e1;
+      background: white;
+      font-size: 0.9rem;
+      transition: 0.2s;
+      outline: none;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      border-color: #2A9D8F;
+      box-shadow: 0 0 0 3px rgba(42,157,143,0.2);
+    }
+
+    .toggle-group {
+      background: #f1f5f9;
+      border-radius: 2rem;
+      padding: 0.2rem;
+      display: inline-flex;
+      gap: 0.3rem;
+      margin-bottom: 1.2rem;
+    }
+
+    .toggle-btn {
+      padding: 0.5rem 1.3rem;
+      border-radius: 2rem;
+      background: transparent;
+      border: none;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.2s;
+      color: #2c5a74;
+    }
+
+    .toggle-btn.active {
+      background: #2A9D8F;
+      color: white;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+
+    .existing-panel {
+      background: #eef2fa;
+      border-radius: 1.2rem;
+      padding: 1rem;
+      margin-bottom: 1.5rem;
+      border-left: 4px solid #f4a261;
+    }
+
+    .existing-panel h3 {
+      font-size: 0.9rem;
+      margin-bottom: 0.6rem;
+      color: #c96f0e;
+    }
+
+    .search-row {
+      display: flex;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+      align-items: flex-end;
+    }
+
+    button {
+      background: #2A9D8F;
+      border: none;
+      padding: 0.6rem 1.2rem;
+      border-radius: 2rem;
+      font-weight: 600;
+      color: white;
+      cursor: pointer;
+      transition: 0.2s;
+      font-size: 0.85rem;
+    }
+
+    button:hover {
+      background: #1f7a6e;
+      transform: translateY(-1px);
+    }
+
+    .btn-outline {
+      background: #eef2f5;
+      color: #1f4e6e;
+      border: 1px solid #cbd5e1;
+    }
+
+    .btn-outline:hover {
+      background: #e2e8f0;
+    }
+
+    .btn-danger {
+      background: #e76f51;
+    }
+
+    .alert-msg {
+      padding: 0.6rem;
+      border-radius: 1rem;
+      margin-bottom: 1rem;
+      background: #e6f7ec;
+      color: #1f7840;
+      border-left: 5px solid #2A9D8F;
+      display: none;
+    }
+
+    .table-wrapper {
+      overflow-x: auto;
+      border-radius: 1.2rem;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: white;
+      border-radius: 1rem;
+    }
+
+    th, td {
+      padding: 0.9rem 0.6rem;
+      text-align: left;
+      border-bottom: 1px solid #e2edf2;
+      font-size: 0.85rem;
+      vertical-align: middle;
+    }
+
+    th {
+      background: #eef2f8;
+      color: #1c3f54;
+      font-weight: 700;
+    }
+
+    .reg-badge {
+      font-family: monospace;
+      font-weight: bold;
+      background: #ecfdf5;
+      padding: 0.2rem 0.5rem;
+      border-radius: 0.8rem;
+      font-size: 0.75rem;
+    }
+
+    .action-btns {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .edit-small, .delete-small {
+      border: none;
+      padding: 0.25rem 0.7rem;
+      border-radius: 1.2rem;
+      font-weight: 600;
+      font-size: 0.7rem;
+      cursor: pointer;
+    }
+
+    .edit-small {
+      background: #f4a261;
+      color: white;
+    }
+    .delete-small {
+      background: #e63946;
+      color: white;
+    }
+
+    @media (max-width: 700px) {
+      body {
+        padding: 1rem;
+      }
+      .card {
+        padding: 1.2rem;
+      }
+    }
+  </style>
 </head>
 <body>
-<div class="app-container">
-    <div class="header-row">
-        <h1>📅 Appointment</h1>
-        <button class="create-appointment-btn" id="resetFormBtn">➕ Create Appointment</button>
+<div class="container">
+  <div class="main-header">
+    <h1>📋 Patient Appointment Manager</h1>
+    <p>✔️ Auto Registration ID (PM + 9 digits) • Aadhaar (Optional) • Address & Relation • <strong>Recall existing patients instantly</strong></p>
+  </div>
+
+  <!-- FORM SECTION (above) -->
+  <div class="form-section">
+    <div class="card">
+      <h2>➕ New Appointment / Existing Patient</h2>
+      <div id="globalAlert" class="alert-msg"></div>
+
+      <!-- Toggle between New Patient and Existing Patient -->
+      <div class="toggle-group" id="patientTypeToggle">
+        <button type="button" id="newPatientToggle" class="toggle-btn active">✨ New Patient</button>
+        <button type="button" id="existingPatientToggle" class="toggle-btn">🔄 Existing Patient</button>
+      </div>
+
+      <!-- EXISTING PATIENT PANEL (shown only when Existing mode active) -->
+      <div id="existingPanel" style="display: none;" class="existing-panel">
+        <h3>🔍 Search Existing Patient (by Name or Mobile)</h3>
+        <div class="search-row">
+          <input type="text" id="existingSearchInput" placeholder="e.g., Rahul, 98765...">
+          <button id="fetchExistingBtn" type="button">📋 Load Patient Details</button>
+        </div>
+        <p style="font-size: 0.7rem; margin-top: 0.5rem; color:#5a6e7c;">Once loaded, update appointment date/doctor and save. Registration number stays same.</p>
+      </div>
+
+      <form id="patientAppointmentForm">
+        <input type="hidden" id="editId" value="">
+
+        <div class="form-row">
+          <div class="form-group"><label>First Name *</label><input type="text" id="firstName" required></div>
+          <div class="form-group"><label>Middle Name</label><input type="text" id="middleName"></div>
+          <div class="form-group"><label>Last Name</label><input type="text" id="lastName"></div>
+        </div>
+        <div class="form-row">
+          <div class="form-group"><label>Mobile No *</label><input type="tel" id="mobile" required></div>
+          <div class="form-group"><label>Gender</label><select id="gender"><option>Male</option><option>Female</option><option>Other</option></select></div>
+          <div class="form-group"><label>👨‍⚕️ Doctor *</label><input type="text" id="doctor" placeholder="Doctor name" required></div>
+        </div>
+        <div class="form-row">
+          <div class="form-group"><label>🆔 Aadhaar (Optional)</label><input type="text" id="aadhaar" placeholder="12 digit number"></div>
+          <div class="form-group"><label>🏠 Address</label><input type="text" id="address" placeholder="Street, City"></div>
+          <div class="form-group"><label>👥 Relation with Patient</label><input type="text" id="relation" placeholder="Self / Father / etc"></div>
+        </div>
+        
+        <div class="form-row">
+          <div class="form-group"><label>📅 Appointment Date *</label><input type="date" id="appointmentDate" required></div>
+          <div class="form-group"><label>📌 Registration No (Auto / Existing)</label><input type="text" id="regNoPreview" readonly style="background:#f0f4f8; font-weight:500;"></div>
+        </div>
+
+        <!-- Quick date selector chips -->
+        <div style="margin: 0.5rem 0 0.8rem 0;">
+          <label>📆 Quick Select Date</label>
+          <div class="form-row" id="dateChipsContainer" style="gap:0.6rem; flex-wrap:wrap;"></div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group"><label>From Date (helper)</label><input type="date" id="fromDate"></div>
+          <div class="form-group"><label>To Date (helper)</label><input type="date" id="toDate"></div>
+          <button type="button" id="applyRangeBtn" class="btn-outline">Set Appt Date</button>
+        </div>
+
+        <div style="display: flex; gap: 1rem; margin-top: 1rem;">
+          <button type="submit" id="submitMainBtn">💾 Save Patient & Appointment</button>
+          <button type="button" id="cancelEditBtn" style="background:#6c757d; display: none;">Cancel Edit</button>
+        </div>
+      </form>
     </div>
+  </div>
 
-    <div class="form-card" id="appointmentFormCard">
-        <div class="section-title">📝 Appointment Details</div>
-
-        <div class="appointment-type-group">
-            <label><input type="radio" name="apptType" value="Existing" class="type-radio" checked> Existing Patient</label>
-            <label><input type="radio" name="apptType" value="New" class="type-radio"> New Patient</label>
-        </div>
-
-        <!-- Existing patient selector (hidden by default, shown when Existing is selected) -->
-        <div class="existing-patient-selector" id="existingPatientSelector">
-            <label>👤 Select Existing Patient:</label>
-            <select id="existingPatientSelect">
-                <option value="">-- Choose patient --</option>
-            </select>
-            <button type="button" class="load-patient-btn" id="loadPatientBtn">Load Details</button>
-            <small style="color:#4a627a;">Loads name, mobile, gender (you can edit doctor/date)</small>
-        </div>
-
-        <div class="form-grid">
-            <div class="form-field"><label>First Name *</label><input type="text" id="firstName" placeholder="First name"></div>
-            <div class="form-field"><label>Middle Name</label><input type="text" id="middleName" placeholder="Middle name"></div>
-            <div class="form-field"><label>Last Name *</label><input type="text" id="lastName" placeholder="Last name"></div>
-        </div>
-        <div class="form-grid">
-            <div class="form-field"><label>Mobile No *</label><input type="tel" id="mobileNo" placeholder="9876543210"></div>
-            <div class="form-field"><label>Gender</label>
-                <select id="gender"><option>Male</option><option>Female</option><option>Other</option></select>
-            </div>
-            <div class="form-field"><label>Doctor (Type name)</label><input type="text" id="doctorName" placeholder="e.g., Dr. Smith"></div>
-        </div>
-
-        <div class="date-strip">
-            <p>📆 Select Appointment Date</p>
-            <div class="date-chips" id="dateChipsContainer"></div>
-            <div class="appointment-date-picker">
-                <label>📅 Or pick date:</label>
-                <input type="date" id="appointmentDateInput">
-            </div>
-        </div>
-
-        <button class="btn-create" id="saveAppointmentBtn">+ Save Appointment</button>
-        <small style="display: block; margin-top: 12px;">* Required: First, Last, Mobile. Doctor is free text.</small>
+  <!-- HISTORY SECTION (below) -->
+  <div class="history-section">
+    <div class="card">
+      <h2>📋 Registration History</h2>
+      <div style="display: flex; gap: 0.6rem; margin-bottom: 1rem; flex-wrap: wrap;">
+        <input type="text" id="historySearch" placeholder="🔍 Search by Name, Mobile, Reg No..." style="flex:1;">
+        <button id="clearHistorySearchBtn" class="btn-outline">Clear</button>
+      </div>
+      <div class="table-wrapper">
+        <table id="historyTable">
+          <thead>
+            <tr><th>Reg No</th><th>Patient Name</th><th>Mobile</th><th>Doctor</th><th>Appt Date</th><th>Aadhaar</th><th>Address / Relation</th><th>Actions</th></tr>
+          </thead>
+          <tbody id="historyTableBody">
+            <tr><td colspan="8" style="text-align:center;">Loading records......</td></tr>
+          </tbody>
+        </table>
+      </div>
     </div>
-
-    <div class="filter-panel">
-        <div class="filter-item"><label>📅 From Date</label><input type="date" id="filterFromDate"></div>
-        <div class="filter-item"><label>📅 To Date</label><input type="date" id="filterToDate"></div>
-        <div class="search-group">
-            <div class="filter-item"><label>🔍 Name / Phone</label><input type="text" id="searchInput" placeholder="Search"></div>
-            <button class="search-btn" id="searchBtn">Search</button>
-        </div>
-        <button class="filter-btn" id="resetFilterBtn">Reset Filters</button>
-    </div>
-
-    <div class="appointments-section">
-        <div class="table-header-actions">
-            <div class="section-title">📋 Appointments List</div>
-            <button class="print-list-btn" id="printTableBtn">🖨️ Print Full List</button>
-        </div>
-        <div class="table-wrapper">
-            <table id="appointmentsTable">
-                <thead><tr><th>First</th><th>Middle</th><th>Last</th><th>Mobile</th><th>Gender</th><th>Doctor</th><th>Type</th><th>Appt Date</th><th>Actions</th></tr></thead>
-                <tbody id="tableBody"><tr class="empty-row"><td colspan="9">No appointments yet.</td></tr></tbody>
-            </table>
-        </div>
-    </div>
+  </div>
 </div>
-<div id="singlePrintContainer" class="single-print-container"></div>
 
 <script>
-    // ---------- DATA ----------
-    let appointments = [];
-    let editModeId = null;
-    let uniquePatients = []; // list of distinct patients from appointment history (for Existing dropdown)
+  // ---------- STORAGE & GLOBALS ----------
+  const STORAGE_KEY = "patient_appointment_manager_db";
+  let patients = [];
+  let nextSequenceNumber = 1;
 
-    // Fixed date range 26/04/2026 - 03/05/2026
-    function getFixedDateRange() {
-        const start = new Date(2026, 3, 26);
-        let dates = [];
-        for (let i = 0; i < 8; i++) {
-            let d = new Date(start);
-            d.setDate(start.getDate() + i);
-            let year = d.getFullYear();
-            let month = String(d.getMonth() + 1).padStart(2,'0');
-            let day = String(d.getDate()).padStart(2,'0');
-            dates.push(`${year}-${month}-${day}`);
+  function formatRegNumber(seq) {
+    return "PM" + String(seq).padStart(9, '0');
+  }
+
+  function computeMaxSequence() {
+    let maxNum = 0;
+    patients.forEach(p => {
+      if (p.registrationNumber && p.registrationNumber.startsWith("PM")) {
+        const num = parseInt(p.registrationNumber.substring(2), 10);
+        if (!isNaN(num) && num > maxNum) maxNum = num;
+      }
+    });
+    return maxNum;
+  }
+
+  function persistData() {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(patients));
+    const maxSeq = computeMaxSequence();
+    nextSequenceNumber = maxSeq + 1;
+  }
+
+  function generateId() {
+    return Date.now().toString(36) + Math.random().toString(36).substring(2, 6);
+  }
+
+  function showMessage(msg, isError = false) {
+    const alertBox = document.getElementById("globalAlert");
+    alertBox.style.display = "block";
+    alertBox.textContent = msg;
+    alertBox.style.background = isError ? "#ffe6e5" : "#e6f7ec";
+    alertBox.style.borderLeftColor = isError ? "#e63946" : "#2A9D8F";
+    setTimeout(() => (alertBox.style.display = "none"), 3500);
+  }
+
+  function updateRegPreview() {
+    const editId = document.getElementById("editId").value;
+    if (editId) {
+      const existing = patients.find(p => p.id === editId);
+      if (existing) {
+        document.getElementById("regNoPreview").value = existing.registrationNumber;
+        return;
+      }
+    }
+    const newMode = document.getElementById("newPatientToggle").classList.contains("active");
+    if (newMode) {
+      document.getElementById("regNoPreview").value = `🔹 ${formatRegNumber(nextSequenceNumber)} (will be assigned)`;
+    } else {
+      document.getElementById("regNoPreview").value = "Search & load existing patient above";
+    }
+  }
+
+  function clearFullForm(resetToggleToNew = true) {
+    document.getElementById("patientAppointmentForm").reset();
+    document.getElementById("editId").value = "";
+    document.getElementById("cancelEditBtn").style.display = "none";
+    if (resetToggleToNew) {
+      document.getElementById("newPatientToggle").classList.add("active");
+      document.getElementById("existingPatientToggle").classList.remove("active");
+      document.getElementById("existingPanel").style.display = "none";
+    }
+    updateRegPreview();
+    const tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    document.getElementById("appointmentDate").value = tomorrow.toISOString().slice(0,10);
+  }
+
+  function loadExistingPatientIntoForm(patient) {
+    document.getElementById("firstName").value = patient.firstName || "";
+    document.getElementById("middleName").value = patient.middleName || "";
+    document.getElementById("lastName").value = patient.lastName || "";
+    document.getElementById("mobile").value = patient.mobile || "";
+    document.getElementById("gender").value = patient.gender || "Male";
+    document.getElementById("doctor").value = patient.doctor || "";
+    document.getElementById("aadhaar").value = patient.aadhaar || "";
+    document.getElementById("address").value = patient.address || "";
+    document.getElementById("relation").value = patient.relation || "";
+    document.getElementById("editId").value = patient.id;
+    if (patient.appointmentDate) document.getElementById("appointmentDate").value = patient.appointmentDate;
+    document.getElementById("cancelEditBtn").style.display = "inline-block";
+    document.getElementById("regNoPreview").value = patient.registrationNumber;
+    showMessage(`✅ Existing patient loaded: ${patient.firstName} ${patient.lastName || ''} (Reg: ${patient.registrationNumber}). Update appointment details if needed.`);
+  }
+
+  function handleExistingPatientSearch() {
+    const query = document.getElementById("existingSearchInput").value.trim();
+    if (query.length < 2) {
+      showMessage("Please enter at least 2 characters (name or mobile)", true);
+      return;
+    }
+    const lowerQuery = query.toLowerCase();
+    const matched = patients.find(p => 
+      (p.firstName + " " + (p.middleName||"") + " " + (p.lastName||"")).toLowerCase().includes(lowerQuery) ||
+      p.mobile.includes(query)
+    );
+    if (matched) {
+      loadExistingPatientIntoForm(matched);
+    } else {
+      showMessage("❌ No existing patient found. Try a different name/mobile or switch to 'New Patient'.", true);
+    }
+  }
+
+  function savePatient(event) {
+    event.preventDefault();
+    const firstName = document.getElementById("firstName").value.trim();
+    const mobile = document.getElementById("mobile").value.trim();
+    const doctor = document.getElementById("doctor").value.trim();
+    const appointmentDate = document.getElementById("appointmentDate").value;
+    if (!firstName || !mobile || !doctor || !appointmentDate) {
+      showMessage("Required: First Name, Mobile, Doctor, Appointment Date", true);
+      return;
+    }
+
+    const editId = document.getElementById("editId").value;
+    const isExistingMode = document.getElementById("existingPatientToggle").classList.contains("active");
+    const patientData = {
+      firstName, middleName: document.getElementById("middleName").value,
+      lastName: document.getElementById("lastName").value, mobile,
+      gender: document.getElementById("gender").value, doctor,
+      aadhaar: document.getElementById("aadhaar").value || "",
+      address: document.getElementById("address").value || "",
+      relation: document.getElementById("relation").value || "",
+      appointmentDate, updatedAt: new Date().toISOString()
+    };
+
+    if (editId) {
+      const index = patients.findIndex(p => p.id === editId);
+      if (index !== -1) {
+        patientData.id = patients[index].id;
+        patientData.registrationNumber = patients[index].registrationNumber;
+        patientData.createdAt = patients[index].createdAt;
+        patients[index] = { ...patients[index], ...patientData };
+        persistData();
+        showMessage(`✏️ Patient updated (existing visit saved). Reg: ${patients[index].registrationNumber}`);
+        clearFullForm(true);
+        renderHistoryTable(document.getElementById("historySearch").value);
+        updateRegPreview();
+      } else {
+        showMessage("Error: record not found", true);
+      }
+    } 
+    else {
+      if (isExistingMode) {
+        showMessage("No patient loaded. Please search & load an existing patient first, or switch to New Patient.", true);
+        return;
+      }
+      const newReg = formatRegNumber(nextSequenceNumber);
+      const newPatient = {
+        id: generateId(),
+        ...patientData,
+        registrationNumber: newReg,
+        createdAt: new Date().toISOString()
+      };
+      patients.push(newPatient);
+      persistData();
+      showMessage(`🎉 New patient registered! Reg No: ${newReg}`);
+      clearFullForm(true);
+      renderHistoryTable(document.getElementById("historySearch").value);
+      updateRegPreview();
+    }
+  }
+
+  function editPatientById(patientId) {
+    const patient = patients.find(p => p.id === patientId);
+    if (patient) {
+      document.getElementById("existingPatientToggle").click();
+      loadExistingPatientIntoForm(patient);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  }
+
+  function deletePatientById(patientId) {
+    if (confirm("⚠️ Delete this patient permanently? All visit records will be removed.")) {
+      patients = patients.filter(p => p.id !== patientId);
+      persistData();
+      renderHistoryTable(document.getElementById("historySearch").value);
+      if (document.getElementById("editId").value === patientId) clearFullForm(true);
+      showMessage("Patient record deleted.");
+    }
+  }
+
+  function renderHistoryTable(filterText = "") {
+    const tbody = document.getElementById("historyTableBody");
+    let filtered = [...patients];
+    if (filterText) {
+      const lower = filterText.toLowerCase();
+      filtered = patients.filter(p => 
+        (p.firstName + " " + (p.middleName||"") + " " + (p.lastName||"")).toLowerCase().includes(lower) ||
+        p.mobile.includes(lower) ||
+        (p.registrationNumber && p.registrationNumber.toLowerCase().includes(lower))
+      );
+    }
+    if (filtered.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;">📭 No patient records found</td></tr>';
+      return;
+    }
+    tbody.innerHTML = "";
+    filtered.forEach(pat => {
+      const row = tbody.insertRow();
+      const fullName = `${pat.firstName} ${pat.middleName || ''} ${pat.lastName || ''}`.trim();
+      const addrRel = `${pat.address ? pat.address.substring(0,28) : ''} ${pat.relation ? `(${pat.relation})` : ''}`.trim() || "—";
+      const aadhaarDisplay = pat.aadhaar ? (pat.aadhaar.length > 4 ? "••••" + pat.aadhaar.slice(-4) : pat.aadhaar) : "—";
+      row.innerHTML = `
+        <td><span class="reg-badge">${pat.registrationNumber}</span></td>
+        <td>${fullName}</td>
+        <td>${pat.mobile}</td>
+        <td>${pat.doctor}</td>
+        <td>${pat.appointmentDate || '—'}</td>
+        <td>${aadhaarDisplay}</td>
+        <td>${addrRel}</td>
+        <td class="action-btns">
+          <button class="edit-small" data-id="${pat.id}">Edit</button>
+          <button class="delete-small" data-id="${pat.id}">Del</button>
+        </td>
+      `;
+    });
+    document.querySelectorAll(".edit-small").forEach(btn => {
+      btn.addEventListener("click", (e) => editPatientById(btn.getAttribute("data-id")));
+    });
+    document.querySelectorAll(".delete-small").forEach(btn => {
+      btn.addEventListener("click", (e) => deletePatientById(btn.getAttribute("data-id")));
+    });
+  }
+
+  function generateDateChips() {
+    const container = document.getElementById("dateChipsContainer");
+    container.innerHTML = "";
+    const today = new Date();
+    for (let i = 0; i <= 7; i++) {
+      const dt = new Date(today);
+      dt.setDate(today.getDate() + i);
+      const yyyy = dt.getFullYear();
+      const mm = String(dt.getMonth() + 1).padStart(2, '0');
+      const dd = String(dt.getDate()).padStart(2, '0');
+      const dateStr = `${yyyy}-${mm}-${dd}`;
+      const chip = document.createElement("button");
+      chip.type = "button";
+      chip.className = "btn-outline";
+      chip.style.padding = "0.3rem 0.9rem";
+      chip.style.fontSize = "0.75rem";
+      chip.textContent = `${dd}/${mm}`;
+      chip.addEventListener("click", () => {
+        document.getElementById("appointmentDate").value = dateStr;
+        showMessage(`Appointment date set to ${dateStr}`);
+      });
+      container.appendChild(chip);
+    }
+  }
+
+  function initToggles() {
+    const newBtn = document.getElementById("newPatientToggle");
+    const existingBtn = document.getElementById("existingPatientToggle");
+    const existingPanel = document.getElementById("existingPanel");
+    
+    newBtn.addEventListener("click", () => {
+      newBtn.classList.add("active");
+      existingBtn.classList.remove("active");
+      existingPanel.style.display = "none";
+      clearFullForm(false);
+      document.getElementById("editId").value = "";
+      document.getElementById("cancelEditBtn").style.display = "none";
+      updateRegPreview();
+    });
+    
+    existingBtn.addEventListener("click", () => {
+      existingBtn.classList.add("active");
+      newBtn.classList.remove("active");
+      existingPanel.style.display = "block";
+      clearFullForm(false);
+      document.getElementById("editId").value = "";
+      document.getElementById("cancelEditBtn").style.display = "none";
+      document.getElementById("regNoPreview").value = "Search & load existing patient";
+      document.getElementById("existingSearchInput").focus();
+    });
+  }
+
+  function loadInitialData() {
+    const stored = localStorage.getItem(STORAGE_KEY);
+    if (stored) {
+      patients = JSON.parse(stored);
+      let maxReg = 0;
+      patients.forEach(p => {
+        if (!p.registrationNumber) p.registrationNumber = formatRegNumber(1);
+        if (p.registrationNumber.startsWith("PM")) {
+          const num = parseInt(p.registrationNumber.substring(2),10);
+          if (!isNaN(num) && num > maxReg) maxReg = num;
         }
-        return dates;
+      });
+      nextSequenceNumber = maxReg + 1;
+    } else {
+      patients = [
+        { id: generateId(), firstName: "Sanjay", middleName: "", lastName: "Mehra", mobile: "9988012345", gender: "Male", doctor: "Dr. Rao", aadhaar: "111122223333", address: "Andheri East, Mumbai", relation: "Self", appointmentDate: new Date().toISOString().slice(0,10), registrationNumber: formatRegNumber(1), createdAt: new Date().toISOString() },
+        { id: generateId(), firstName: "Pooja", middleName: "S", lastName: "Verma", mobile: "9876509876", gender: "Female", doctor: "Dr. Mehta", aadhaar: "", address: "Salt Lake, Kolkata", relation: "Wife", appointmentDate: new Date().toISOString().slice(0,10), registrationNumber: formatRegNumber(2), createdAt: new Date().toISOString() }
+      ];
+      nextSequenceNumber = 3;
+      persistData();
     }
-    const fixedDateRange = getFixedDateRange();
+    renderHistoryTable();
+    updateRegPreview();
+  }
 
-    function formatDisplayDate(dateStr) {
-        if (!dateStr) return '';
-        let parts = dateStr.split('-');
-        return `${parts[2]}/${parts[1]}/${parts[0]}`;
-    }
+  function bindEvents() {
+    document.getElementById("fetchExistingBtn").addEventListener("click", handleExistingPatientSearch);
+    document.getElementById("applyRangeBtn").addEventListener("click", () => {
+      const fromDate = document.getElementById("fromDate").value;
+      if (fromDate) document.getElementById("appointmentDate").value = fromDate;
+      else showMessage("Select From Date first", true);
+    });
+    document.getElementById("cancelEditBtn").addEventListener("click", () => clearFullForm(true));
+    document.getElementById("patientAppointmentForm").addEventListener("submit", savePatient);
+    document.getElementById("historySearch").addEventListener("input", (e) => renderHistoryTable(e.target.value));
+    document.getElementById("clearHistorySearchBtn").addEventListener("click", () => {
+      document.getElementById("historySearch").value = "";
+      renderHistoryTable("");
+    });
+    document.getElementById("existingSearchInput").addEventListener("keypress", (e) => {
+      if (e.key === "Enter") handleExistingPatientSearch();
+    });
+  }
 
-    function persist() {
-        localStorage.setItem('appointmentsData', JSON.stringify(appointments));
-    }
-
-    // extract unique patients from appointments (by firstName+lastName+mobile) — latest occurrence's gender/middle used
-    function rebuildUniquePatients() {
-        const map = new Map();
-        appointments.forEach(app => {
-            const key = `${app.firstName}|${app.lastName}|${app.mobileNo}`.toLowerCase();
-            if (!map.has(key)) {
-                map.set(key, {
-                    id: key,
-                    firstName: app.firstName,
-                    middleName: app.middleName || '',
-                    lastName: app.lastName,
-                    mobileNo: app.mobileNo,
-                    gender: app.gender
-                });
-            } else {
-                // optionally update gender if changed, but keep
-                let existing = map.get(key);
-                if (app.gender) existing.gender = app.gender;
-                if (app.middleName) existing.middleName = app.middleName;
-            }
-        });
-        uniquePatients = Array.from(map.values());
-        updateExistingPatientDropdown();
-    }
-
-    function updateExistingPatientDropdown() {
-        const select = document.getElementById('existingPatientSelect');
-        if (!select) return;
-        select.innerHTML = '<option value="">-- Choose patient --</option>';
-        uniquePatients.forEach(patient => {
-            const fullName = `${patient.firstName} ${patient.middleName ? patient.middleName + ' ' : ''}${patient.lastName}`;
-            const option = document.createElement('option');
-            option.value = patient.id;
-            option.textContent = `${fullName} (${patient.mobileNo})`;
-            option.dataset.patient = JSON.stringify(patient);
-            select.appendChild(option);
-        });
-    }
-
-    function loadPatientToForm(patient) {
-        if (!patient) return;
-        document.getElementById('firstName').value = patient.firstName;
-        document.getElementById('middleName').value = patient.middleName || '';
-        document.getElementById('lastName').value = patient.lastName;
-        document.getElementById('mobileNo').value = patient.mobileNo;
-        document.getElementById('gender').value = patient.gender;
-        // Doctor field remains as is (not overwritten to allow different doctor per visit)
-        // but we can optionally keep current doctor or leave for user to type
-        showToast(`Loaded patient: ${patient.firstName} ${patient.lastName}`);
-    }
-
-    // toggle visibility of existing patient selector based on radio
-    function toggleExistingSelector() {
-        const isExisting = document.querySelector('input[name="apptType"]:checked').value === 'Existing';
-        const selectorDiv = document.getElementById('existingPatientSelector');
-        selectorDiv.style.display = isExisting ? 'flex' : 'none';
-        if (!isExisting) {
-            // if New, clear form optionally (but keep maybe reset? but we will keep as is for new entry)
-            // We do not clear fields automatically to allow quick entry, but user can reset manually
-        } else {
-            // refresh dropdown with latest patients
-            rebuildUniquePatients();
-        }
-    }
-
-    // render date chips
-    function renderDateChips(selectedVal) {
-        const container = document.getElementById('dateChipsContainer');
-        if (!container) return;
-        container.innerHTML = '';
-        fixedDateRange.forEach(iso => {
-            const chip = document.createElement('div');
-            chip.className = 'date-chip';
-            if (selectedVal === iso) chip.classList.add('active-chip');
-            chip.textContent = formatDisplayDate(iso);
-            chip.addEventListener('click', () => {
-                document.getElementById('appointmentDateInput').value = iso;
-                renderDateChips(iso);
-            });
-            container.appendChild(chip);
-        });
-    }
-
-    function resetCreateForm() {
-        document.getElementById('firstName').value = '';
-        document.getElementById('middleName').value = '';
-        document.getElementById('lastName').value = '';
-        document.getElementById('mobileNo').value = '';
-        document.getElementById('gender').value = 'Male';
-        document.getElementById('doctorName').value = '';
-        document.querySelector('input[name="apptType"][value="Existing"]').checked = true;
-        toggleExistingSelector();
-        const defaultDate = fixedDateRange[0];
-        document.getElementById('appointmentDateInput').value = defaultDate;
-        renderDateChips(defaultDate);
-        editModeId = null;
-        const saveBtn = document.getElementById('saveAppointmentBtn');
-        saveBtn.textContent = '+ Save Appointment';
-        saveBtn.style.background = '#1F5E8E';
-        // clear existing patient selection
-        const select = document.getElementById('existingPatientSelect');
-        if (select) select.value = '';
-    }
-
-    // filters
-    let currentFilter = { fromDate: '', toDate: '', searchText: '' };
-    function filterAppointments() {
-        let filtered = [...appointments];
-        if (currentFilter.fromDate) filtered = filtered.filter(a => a.appointmentDate >= currentFilter.fromDate);
-        if (currentFilter.toDate) filtered = filtered.filter(a => a.appointmentDate <= currentFilter.toDate);
-        if (currentFilter.searchText.trim()) {
-            const term = currentFilter.searchText.trim().toLowerCase();
-            filtered = filtered.filter(a => 
-                (`${a.firstName} ${a.middleName} ${a.lastName}`).toLowerCase().includes(term) ||
-                a.mobileNo.includes(term)
-            );
-        }
-        return filtered;
-    }
-
-    // Print single appointment
-    function printSingleAppointment(app) {
-        const printDiv = document.getElementById('singlePrintContainer');
-        const formattedDate = formatDisplayDate(app.appointmentDate);
-        const fullName = `${app.firstName} ${app.middleName ? app.middleName + ' ' : ''}${app.lastName}`;
-        printDiv.innerHTML = `
-            <div style="max-width:700px; margin:20px auto; padding:20px; border:1px solid #ccc; border-radius:20px; font-family:monospace;">
-                <h2 style="text-align:center; color:#1F5E8E;">📋 APPOINTMENT SLIP</h2>
-                <hr>
-                <p><strong>Patient:</strong> ${fullName}</p>
-                <p><strong>Mobile:</strong> ${app.mobileNo}</p>
-                <p><strong>Gender:</strong> ${app.gender}</p>
-                <p><strong>Doctor:</strong> ${app.doctor}</p>
-                <p><strong>Appointment Type:</strong> ${app.appointmentType}</p>
-                <p><strong>Date:</strong> ${formattedDate}</p>
-                <hr>
-                <p style="font-size:12px;">Generated: ${new Date().toLocaleString()}</p>
-            </div>
-        `;
-        printDiv.style.display = 'block';
-        window.print();
-        setTimeout(() => {
-            printDiv.style.display = 'none';
-            printDiv.innerHTML = '';
-        }, 100);
-    }
-
-    function renderTable() {
-        const tbody = document.getElementById('tableBody');
-        const filtered = filterAppointments();
-        if (filtered.length === 0) {
-            tbody.innerHTML = '<tr class="empty-row"><td colspan="9">📭 No appointments found.</td></tr>';
-            return;
-        }
-        tbody.innerHTML = '';
-        filtered.forEach(app => {
-            const row = tbody.insertRow();
-            row.insertCell(0).textContent = app.firstName;
-            row.insertCell(1).textContent = app.middleName || '—';
-            row.insertCell(2).textContent = app.lastName;
-            row.insertCell(3).textContent = app.mobileNo;
-            row.insertCell(4).textContent = app.gender;
-            row.insertCell(5).textContent = app.doctor;
-            row.insertCell(6).textContent = app.appointmentType;
-            row.insertCell(7).textContent = formatDisplayDate(app.appointmentDate);
-            const actionCell = row.insertCell(8);
-            actionCell.className = 'action-buttons';
-            const editBtn = document.createElement('button');
-            editBtn.textContent = '✏️';
-            editBtn.className = 'edit-btn';
-            editBtn.onclick = () => editAppointment(app.id);
-            const delBtn = document.createElement('button');
-            delBtn.textContent = '🗑️';
-            delBtn.className = 'delete-btn';
-            delBtn.onclick = () => deleteAppointment(app.id);
-            const printBtn = document.createElement('button');
-            printBtn.textContent = '🖨️';
-            printBtn.className = 'print-row-btn';
-            printBtn.onclick = () => printSingleAppointment(app);
-            actionCell.append(editBtn, delBtn, printBtn);
-        });
-    }
-
-    function saveAppointment() {
-        const firstName = document.getElementById('firstName').value.trim();
-        const lastName = document.getElementById('lastName').value.trim();
-        const mobileNo = document.getElementById('mobileNo').value.trim();
-        if (!firstName || !lastName || !mobileNo) {
-            showToast('First Name, Last Name and Mobile are required', true);
-            return;
-        }
-        if (!/^\d{7,15}$/.test(mobileNo)) {
-            showToast('Invalid mobile number', true);
-            return;
-        }
-        const middleName = document.getElementById('middleName').value.trim();
-        const gender = document.getElementById('gender').value;
-        let doctor = document.getElementById('doctorName').value.trim();
-        if (!doctor) {
-            showToast('Please enter doctor name', true);
-            return;
-        }
-        const appointmentType = document.querySelector('input[name="apptType"]:checked').value;
-        let appointmentDate = document.getElementById('appointmentDateInput').value;
-        if (!appointmentDate || !fixedDateRange.includes(appointmentDate)) {
-            showToast(`Please select a date within ${formatDisplayDate(fixedDateRange[0])} - ${formatDisplayDate(fixedDateRange[7])}`, true);
-            return;
-        }
-
-        if (editModeId !== null) {
-            const idx = appointments.findIndex(a => a.id === editModeId);
-            if (idx !== -1) {
-                appointments[idx] = { ...appointments[idx], firstName, middleName, lastName, mobileNo, gender, doctor, appointmentType, appointmentDate };
-                showToast('Appointment updated');
-            }
-            editModeId = null;
-            document.getElementById('saveAppointmentBtn').textContent = '+ Save Appointment';
-        } else {
-            const newId = Date.now() + '' + Math.floor(Math.random() * 10000);
-            appointments.push({ id: newId, firstName, middleName, lastName, mobileNo, gender, doctor, appointmentType, appointmentDate });
-            showToast('New appointment created');
-        }
-        persist();
-        rebuildUniquePatients();  // update existing patient list
-        resetCreateForm();
-        applyFiltersAndRender();
-    }
-
-    function editAppointment(id) {
-        const app = appointments.find(a => a.id === id);
-        if (!app) return;
-        editModeId = id;
-        document.getElementById('firstName').value = app.firstName;
-        document.getElementById('middleName').value = app.middleName || '';
-        document.getElementById('lastName').value = app.lastName;
-        document.getElementById('mobileNo').value = app.mobileNo;
-        document.getElementById('gender').value = app.gender;
-        document.getElementById('doctorName').value = app.doctor;
-        const radioVal = app.appointmentType;
-        if (radioVal === 'Existing') document.querySelector('input[name="apptType"][value="Existing"]').checked = true;
-        else document.querySelector('input[name="apptType"][value="New"]').checked = true;
-        toggleExistingSelector();
-        document.getElementById('appointmentDateInput').value = app.appointmentDate;
-        renderDateChips(app.appointmentDate);
-        const saveBtn = document.getElementById('saveAppointmentBtn');
-        saveBtn.textContent = '✏️ Update Appointment';
-        saveBtn.style.background = '#2c6e2f';
-        document.getElementById('appointmentFormCard').scrollIntoView({ behavior: 'smooth' });
-    }
-
-    function deleteAppointment(id) {
-        if (confirm('Delete this appointment?')) {
-            appointments = appointments.filter(a => a.id !== id);
-            if (editModeId === id) resetCreateForm();
-            persist();
-            rebuildUniquePatients();
-            applyFiltersAndRender();
-            showToast('Appointment deleted');
-        }
-    }
-
-    function applyFiltersAndRender() {
-        currentFilter = {
-            fromDate: document.getElementById('filterFromDate').value,
-            toDate: document.getElementById('filterToDate').value,
-            searchText: document.getElementById('searchInput').value
-        };
-        renderTable();
-    }
-
-    function resetFilters() {
-        document.getElementById('filterFromDate').value = '';
-        document.getElementById('filterToDate').value = '';
-        document.getElementById('searchInput').value = '';
-        applyFiltersAndRender();
-        showToast('Filters reset');
-    }
-
-    function showToast(msg, err = false) {
-        let t = document.querySelector('.toast-msg');
-        if (t) t.remove();
-        let div = document.createElement('div');
-        div.className = 'toast-msg';
-        div.style.backgroundColor = err ? '#b91c1c' : '#1F5E8E';
-        div.textContent = msg;
-        document.body.appendChild(div);
-        setTimeout(() => div.remove(), 2500);
-    }
-
-    // load demo data if empty
-    function loadDemoData() {
-        if (appointments.length === 0) {
-            appointments = [
-                { id: '1001', firstName: 'Aarav', middleName: 'Kumar', lastName: 'Sharma', mobileNo: '9876543210', gender: 'Male', doctor: 'Dr. Emily Clark', appointmentType: 'Existing', appointmentDate: fixedDateRange[2] },
-                { id: '1002', firstName: 'Ishita', middleName: '', lastName: 'Verma', mobileNo: '9988776655', gender: 'Female', doctor: 'Dr. Sarah Varma', appointmentType: 'New', appointmentDate: fixedDateRange[4] },
-                { id: '1003', firstName: 'Rohan', middleName: 'Raj', lastName: 'Mehta', mobileNo: '9123456789', gender: 'Male', doctor: 'Dr. Anjali Kapoor', appointmentType: 'Existing', appointmentDate: fixedDateRange[0] }
-            ];
-            persist();
-        }
-    }
-
-    function init() {
-        const stored = localStorage.getItem('appointmentsData');
-        if (stored) appointments = JSON.parse(stored);
-        else loadDemoData();
-        rebuildUniquePatients();
-        resetCreateForm();
-        applyFiltersAndRender();
-
-        // Event listeners
-        document.getElementById('saveAppointmentBtn').addEventListener('click', saveAppointment);
-        document.getElementById('searchBtn').addEventListener('click', applyFiltersAndRender);
-        document.getElementById('resetFilterBtn').addEventListener('click', resetFilters);
-        document.getElementById('resetFormBtn').addEventListener('click', () => { resetCreateForm(); editModeId = null; showToast('Form reset'); });
-        document.getElementById('printTableBtn').addEventListener('click', () => window.print());
-        document.getElementById('loadPatientBtn').addEventListener('click', () => {
-            const select = document.getElementById('existingPatientSelect');
-            const selectedOption = select.options[select.selectedIndex];
-            if (selectedOption && selectedOption.value) {
-                const patientData = JSON.parse(selectedOption.dataset.patient);
-                loadPatientToForm(patientData);
-            } else {
-                showToast('Select a patient first', true);
-            }
-        });
-        const radios = document.querySelectorAll('input[name="apptType"]');
-        radios.forEach(r => r.addEventListener('change', toggleExistingSelector));
-        const datePicker = document.getElementById('appointmentDateInput');
-        datePicker.addEventListener('change', (e) => renderDateChips(e.target.value));
-        toggleExistingSelector();
-        renderDateChips(fixedDateRange[0]);
-    }
-
-    init();
+  document.addEventListener("DOMContentLoaded", () => {
+    loadInitialData();
+    generateDateChips();
+    initToggles();
+    bindEvents();
+    const defaultDate = new Date();
+    defaultDate.setDate(defaultDate.getDate() + 1);
+    if (!document.getElementById("appointmentDate").value) 
+      document.getElementById("appointmentDate").value = defaultDate.toISOString().slice(0,10);
+  });
 </script>
 </body>
 </html>
